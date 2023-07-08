@@ -1,0 +1,12 @@
+<tr th:fragment="RefusedRows" th:each="ActiveT : ${ListActiveT}" style="background:red;">
+    <td th:text="${ActiveT.cin}">01</td>
+    <td th:text="${ActiveT.name}">Sam David</td>
+    <td th:text="${ActiveT.service}">Design</td>
+    <td th:text="${ActiveT.date_d}">03-24-22</td>
+    <td>
+        <a th:href="@{/ReRows(cin=${ActiveT.cin},service=${ActiveT.id_service})}">
+
+            <button style="cursor:pointer; background:none;">Accept</button>
+        </a>
+    </td>
+</tr>

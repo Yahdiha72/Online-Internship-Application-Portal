@@ -1,0 +1,11 @@
+package Project.OCP.Service;
+
+import Project.OCP.Model.Stagiair;
+import Project.OCP.Repo.StagiairRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class StagiairService {
+
+}

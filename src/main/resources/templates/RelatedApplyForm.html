@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!---Coding By CodingLab | www.codinglabweb.com--->
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Registration Form in HTML CSS</title>
+  <!---Custom CSS File--->
+  <link rel="stylesheet" th:href="@{/css/ApplyForm.css}" />
+</head>
+<body>
+<section class="container">
+  <header>Registration Form</header>
+  <form th:action="@{/Apply}" class="form" method="post" th:object="${stagiair}" enctype="multipart/form-data">
+    <div class="column">
+      <div class="input-box">
+        <label>Firs Name</label>
+        <input type="text" placeholder="Enter your first name"  th:field="*{FName}" required />
+      </div>
+
+      <div class="input-box">
+        <label>Last Name</label>
+        <input type="text" placeholder="Enter your last name" th:field="*{LName}" required />
+      </div>
+    </div>
+    <div class="column">
+      <div class="input-box">
+        <label>National ID card</label>
+        <input type="text" placeholder="Enter ID number" th:field="*{cin}" required />
+      </div>
+
+      <div class="input-box">
+        <label>Email Address</label>
+        <input type="email" placeholder="Enter email address" th:field="*{email}" required />
+      </div>
+    </div>
+    <div class="column">
+      <div class="input-box">
+        <label>Phone Number</label>
+        <input type="text" placeholder="Enter phone number" th:field="*{tel}" required />
+      </div>
+      <div class="input-box">
+        <label>Birth Date</label>
+        <input type="date" placeholder="Enter birth date"  th:field="*{birth_date}" required />
+      </div>
+    </div>
+    <div class="gender-box">
+      <h3>Gender</h3>
+      <div class="gender-option">
+        <div class="gender">
+          <input type="radio" id="check-male" name="gender" th:field="*{gender}"  value="Male" />
+          <label for="check-male">male</label>
+        </div>
+        <div class="gender">
+          <input type="radio" id="check-female" name="gender" th:field="*{gender}" value="Female"  />
+          <label for="check-female">Female</label>
+        </div>
+        <div class="gender">
+          <input type="radio" id="check-other" name="gender" th:field="*{gender}" value="Other" />
+          <label for="check-other">prefer not to say</label>
+        </div>
+      </div>
+    </div>
+    <div class="input-box">
+
+      <div class="input-box">
+        <label>Service</label>
+        <input type="text"  th:value="${service.service_name}"  required />
+        <input type="text" name="service" th:value="${service.id}"  hidden />
+      </div>
+    </div>
+    <div class="column">
+      <div class="input-box">
+        <label>Start Date</label>
+        <input type="date" placeholder="Enter Start number" name="dated" required />
+      </div>
+      <div class="input-box">
+        <label>End Date</label>
+        <input type="date" placeholder="Enter End date"  name="dateE" required />
+      </div>
+    </div>
+    <div class="input-box address">
+      <div class="column">
+        <label style="margin-right: 50%;
+            margin-left: 10px;">CV</label>
+        <label>Assurance</label>
+      </div>
+      <div class="column">
+        <input type="file" id="CV" required name="cv" class="upload"/>
+        <input type="file" id="Assurance"name="assurance" required class="upload" />
+      </div>
+      <div class="column" style="margin-bottom: 0px;
+          margin-top: 20px;">
+        <label style="margin-right: 45%;
+            margin-left: 10px;">Photo</label>
+        <label>Attestation</label>
+      </div>
+      <div class="column">
+        <input type="file" id="Photo" name="photo" required class="upload" />
+        <input type="file" name="attestation" id="Attestation" required class="upload"/>
+      </div>
+      <div class="input-box">
+        <label>CIN</label>
+        <input type="file" name="cinFile" id="cin" required class="upload"/>
+      </div>
+    </div>
+    <button >Submit</button>
+  </form>
+</section>
+</body>
+</html>

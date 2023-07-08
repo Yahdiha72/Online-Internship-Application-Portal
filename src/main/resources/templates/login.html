@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Transparent Login Form UI</title>
+  <link rel="stylesheet" th:href="@{/css/login.css}">
+
+
+</head>
+<body>
+<input type="hidden" value="${test}" id="test">
+<script>
+  function checkAccessRefused() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const testParam = urlParams.get('Test');
+    if (testParam === 'refused') {
+      const cinInput = document.querySelector('input[name="cin"]');
+      const keyInput = document.querySelector('input[name="key"]');
+
+      cinInput.style.border = '2px solid red';
+      keyInput.style.border = '2px solid red';
+
+      cinInput.focus();
+    }
+  }
+
+  // Call the function after the entire document, including CSS, has finished loading
+  window.onload = checkAccessRefused;
+</script>
+
+
+
+<div class="bg-img">
+  <div class="content">
+    <header>Login</header>
+    <form th:action="@{/LOGIN_A}" method="post" id="FormLOG">
+      <div class="field space">
+        <input type="password" class="pass-key" name="cin" required placeholder="Enter ID...">
+        <span class="show">SHOW</span>
+      </div>
+      <div class="field space">
+        <input type="password" class="pass-key" name="key" required placeholder="Enter Code...">
+        <span class="show">SHOW</span>
+      </div>
+      <div class="field">
+        <input type="submit" value="LOGIN">
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+      const pass_field = document.querySelector('.pass-key');
+      const showBtn = document.querySelector('.show');
+      showBtn.addEventListener('click', function(){
+       if(pass_field.type === "password"){
+         pass_field.type = "text";
+         showBtn.textContent = "HIDE";
+         showBtn.style.color = "#3498db";
+       }else{
+         pass_field.type = "password";
+         showBtn.textContent = "SHOW";
+         showBtn.style.color = "#222";
+       }
+      });
+    </script>
+
+
+</body>
+</html>

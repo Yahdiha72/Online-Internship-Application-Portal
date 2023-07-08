@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!---Coding By CodingLab | www.codinglabweb.com--->
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Apply</title>
+    <!---Custom CSS File--->
+    <link rel="stylesheet" th:href="@{/css/ApplyForm.css}" />
+</head>
+<body>
+<section class="container">
+    <header>Apply Form</header>
+    <form th:action="@{/Apply}" id="myForm" class="form" method="post" th:object="${stagiair}" enctype="multipart/form-data" onsubmit="return validateInputs()">
+        <div class="column">
+            <div class="input-box">
+                <label>Firs Name</label>
+                <input type="text" placeholder="Enter your first name"  th:field="*{FName}" name="first_name" id="first_name" />
+            </div>
+
+            <div class="input-box">
+                <label>Last Name</label>
+                <input type="text" placeholder="Enter your last name" th:field="*{LName}" name="last_name" id="last_name"/>
+            </div>
+        </div>
+        <div class="column">
+            <div class="input-box">
+                <label>National ID card</label>
+                <input type="text" placeholder="Enter ID number" th:field="*{cin}" name="cin_trainee" id="cin_trainee"/>
+            </div>
+
+            <div class="input-box">
+                <label>Email Address</label>
+                <input type="email" placeholder="Enter email address" th:field="*{email}" name="email_trainee" id="email_trainee" />
+            </div>
+        </div>
+        <div class="column">
+            <div class="input-box">
+                <label>Phone Number</label>
+                <input type="text" placeholder="Enter phone number" th:field="*{tel}" name="tel_trainee" id="tel_trainee"/>
+            </div>
+            <div class="input-box">
+                <label>Birth Date</label>
+                <input type="date" placeholder="Enter birth date"  th:field="*{birth_date}" required id="birth_date"/>
+            </div>
+        </div>
+        <div class="gender-box">
+            <h3>Gender</h3>
+            <div class="gender-option">
+                <div class="gender">
+                    <input type="radio" id="check-male" name="gender" th:field="*{gender}"  value="Male" />
+                    <label for="check-male">male</label>
+                </div>
+                <div class="gender">
+                    <input type="radio" id="check-female" name="gender" th:field="*{gender}" value="Female"  />
+                    <label for="check-female">Female</label>
+                </div>
+                <div class="gender">
+                    <input type="radio" id="check-other" name="gender" th:field="*{gender}" value="Other" />
+                    <label for="check-other">prefer not to say</label>
+                </div>
+            </div>
+        </div>
+        <div class="input-box">
+            <label>Service</label>
+            <div class="select-box">
+           <select name="service">
+               <option th:each="serviceO : ${service}" th:value="${serviceO.id}"  th:text="${serviceO.service_name}" name="service"></option>
+           </select>
+            </div>
+        </div>
+        <div class="column">
+            <div class="input-box">
+                <label>Start Date</label>
+                <input type="date" placeholder="Enter Start number" name="dated"  id="start-date" required />
+            </div>
+            <div class="input-box">
+                <label>End Date</label>
+                <input type="date" placeholder="Enter End date"  name="dateE"  id="end-date" required />
+            </div>
+        </div>
+
+        <div class="input-box address">
+            <div class="column">
+                <label style="margin-right: 50%;
+            margin-left: 10px;">CV</label>
+                <label>Assurance</label>
+            </div>
+            <div class="column">
+                <input type="file" id="CV" required name="cv" class="upload"/>
+                <input type="file" id="Assurance"name="assurance" required class="upload"  accept="en"/>
+            </div>
+            <div class="column" style="margin-bottom: 0px;
+          margin-top: 20px;">
+                <label style="margin-right: 45%;
+            margin-left: 10px;">Photo</label>
+                <label>Attestation</label>
+            </div>
+            <div class="column">
+                <input type="file" id="Photo" name="photo" required class="upload" />
+                <input type="file" name="attestation" id="Attestation" required class="upload"/>
+            </div>
+            <div class="input-box">
+                <label>CIN</label>
+                <input type="file" name="cinFile" id="cin" required class="upload"/>
+            </div>
+        </div>
+        <button type="submit" >Submit</button>
+    </form>
+</section>
+<script>
+function validateInputs() {
+  const firstNameInput = document.getElementById('first_name');
+  const lastNameInput = document.getElementById('last_name');
+  const cinInput = document.getElementById('cin_trainee');
+  const emailInput = document.getElementById('email_trainee');
+  const telInput = document.getElementById('tel_trainee');
+  const birthdateInput = document.getElementById('birth_date');
+  const genderInputs = document.querySelectorAll('input[name="gender"]');
+  const startDateInput = document.getElementById('start-date');
+  const endDateInput = document.getElementById('end-date');
+
+  if (
+    firstNameInput.value === "" ||
+    lastNameInput.value === "" ||
+    cinInput.value === "" ||
+    emailInput.value === "" ||
+    telInput.value === "" ||
+    birthdateInput.value === "" ||
+    startDateInput.value === "" ||
+    endDateInput.value === ""
+  ) {
+    alert("Please fill in all the required fields.");
+    return false;
+  }
+
+  const startDate = new Date(startDateInput.value);
+  const endDate = new Date(endDateInput.value);
+
+  if (startDate >= endDate) {
+    alert("Start date must be before end date.");
+    return false;
+  }
+
+  const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+  const durationInDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+  if (durationInDays < 15) {
+    alert("The duration between the start date and end date should be at least 15 days.");
+    return false;
+  }
+
+  let genderSelected = false;
+  for (const genderInput of genderInputs) {
+    if (genderInput.checked) {
+      genderSelected = true;
+      break;
+    }
+  }
+
+  if (!genderSelected) {
+    alert("Please select a gender.");
+    return false;
+  }
+
+  const telPattern = /^0[67][0-9]{8}$/;
+  if (!telPattern.test(telInput.value)) {
+    alert("Please enter a valid telephone number.");
+    return false;
+  }
+
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!emailPattern.test(emailInput.value)) {
+    alert("Please enter a valid email address.");
+    return false;
+  }
+
+  const birthdate = new Date(birthdateInput.value);
+  const currentDate = new Date();
+
+  if (birthdate >= currentDate) {
+    alert("Birth date cannot be in the future.");
+    return false;
+  }
+
+  const ageDiff = currentDate.getFullYear() - birthdate.getFullYear();
+  const isOver18 = ageDiff > 18;
+
+  if (!isOver18) {
+    alert("Age must be greater than 18.");
+    return false;
+  }
+
+  return true;
+}
+
+</script>
+
+</body>
+</html>

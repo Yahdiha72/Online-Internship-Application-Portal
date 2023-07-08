@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Attendance Dashboard | By Code Info</title>
+  <link rel="stylesheet" th:href="@{/css/Dashboard.css}" />
+  <!-- Font Awesome Cdn Link -->
+  <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}"/>
+</head>
+<body>
+<div class="container">
+  <nav>
+    <ul>
+      <li><a href="#" class="logo">
+        <img th:src="@{/images/icon.png}">
+        <span class="nav-item">Admin</span>
+      </a></li>
+      <li><a th:href="@{/Dashboard(cin=${session.cin})}">
+        <i class="fas fa-menorah"></i>
+        <span class="nav-item">Dashboard</span>
+      </a></li>
+      <li><a th:href="@{/ShowServices}">
+        <i class='fas fa-cogs'></i>
+        <span class="nav-item">Services</span>
+      </a></li>
+      <li><a th:href="@{/ShowActiveTrainees}">
+        <i class='fas fa-check-double'></i>
+        <span class="nav-item">Trainees</span>
+      </a></li>
+      <li><a th:href="@{/ShowRefusedTrainees}">
+        <i class="fas fa-chart-bar"></i>
+        <span class="nav-item">Refused</span>
+      </a></li>
+      <li>
+        <a th:href="@{/ShowProfile(cin=${session.cin})}">
+          <i class='fas fa-id-card'></i>
+          <span class="nav-item">Profile</span>
+        </a></li>
+
+
+      <li><a href="#" class="logout">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="nav-item">Log out</span>
+      </a></li>
+    </ul>
+  </nav>
+  <section class="main">
+    <div class="main-top">
+      <h1>SERVICES</h1>
+      <i class="fas fa-user-cog"></i>
+    </div>
+    <div class="users">
+      <div class="card" th:each="service :${services}" >
+        <h4 th:text="${service.service_name}"></h4>
+        <p>service</p>
+        <div class="per">
+          <table>
+            <tr>
+              <td><p th:text="${service.service_description}"></p></td>
+            </tr>
+          </table>
+        </div>
+        <form th:action="@{/UpdateS}">
+          <input type="hidden" th:name="id" th:value="${service.id}" />
+          <button type="submit">Update</button>
+        </form>
+
+        <form th:action="@{/DeleteService}" method="get">
+          <input type="hidden" th:name="id" th:value="${service.id}" />
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+    <section class="attendance">
+      <div class="attendance-list">
+        <h1> ADD NEW SERVICE</h1>
+        <div class="wrapperServ">
+          <div class="form">
+            <form th:action="@{/SaveService}" method="post" th:object="${service}">
+            <div class="inputfield">
+              <label>Service Name</label>
+              <input type="text" class="input" th:field="*{service_name}">
+            </div>
+            <div class="inputfield">
+              <label>Description</label>
+              <textarea class="textarea" th:field="*{service_description}" ></textarea>
+            </div>
+            <div class="inputfield">
+              <input type="submit" value="ADD" class="btn">
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+</div>
+
+</body>
+</html>
